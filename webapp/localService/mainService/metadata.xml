@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZSD_GROUP_SHIPMENT_SRV" xml:lang="ar" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Shipment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Grpshpmno"/>
+                    <PropertyRef Name="Deliveryno"/>
+                </Key>
+                <Property Name="Grpshpmno" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Groupp Shipment Numb" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Deliveryno" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Delivery No" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Zlineno" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Line.no" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Sopo" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="SO/PO" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Itemcode" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Item Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Deliveryqty" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Delivery Qty" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Uom" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="UoM" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="الوحدة" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Stloc" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="الموقع" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Warehouseno" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="رقم المستودع" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Shiptoparty" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Ship to Party" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Shiptoname" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Ship to Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Groupshpm" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Group Shipment" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Header" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Grpshpmno"/>
+                </Key>
+                <Property Name="Waybillno" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Way Bill No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Grpshpmno" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Groupp Shipment Numb" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Trckplteno" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Truck Plate No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Shpmco" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Shipment Co." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Drivername" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Driver Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Drivermobile" Type="Edm.String" Nullable="false" MaxLength="13" sap:unicode="false" sap:label="Driver Mobile" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Comments" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Comments" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Shpmdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Shipment Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Shpmtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Shipment Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Createdby" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Created by" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="header" Relationship="ZSD_GROUP_SHIPMENT_SRV.header" FromRole="FromRole_header" ToRole="ToRole_header"/>
+            </EntityType>
+            <Association Name="header" sap:content-version="1">
+                <End Type="ZSD_GROUP_SHIPMENT_SRV.Header" Multiplicity="0..1" Role="FromRole_header"/>
+                <End Type="ZSD_GROUP_SHIPMENT_SRV.Shipment" Multiplicity="*" Role="ToRole_header"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_header">
+                        <PropertyRef Name="Grpshpmno"/>
+                    </Principal>
+                    <Dependent Role="ToRole_header">
+                        <PropertyRef Name="Grpshpmno"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZSD_GROUP_SHIPMENT_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ShipmentSet" EntityType="ZSD_GROUP_SHIPMENT_SRV.Shipment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="HeaderSet" EntityType="ZSD_GROUP_SHIPMENT_SRV.Header" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <AssociationSet Name="headerSet" Association="ZSD_GROUP_SHIPMENT_SRV.header" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HeaderSet" Role="FromRole_header"/>
+                    <End EntitySet="ShipmentSet" Role="ToRole_header"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <atom:link rel="self" href="https://rd4.sap.alrabie.com:443/sap/opu/odata/sap/ZSD_GROUP_SHIPMENT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://rd4.sap.alrabie.com:443/sap/opu/odata/sap/ZSD_GROUP_SHIPMENT_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

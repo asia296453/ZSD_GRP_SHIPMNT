@@ -1,0 +1,163 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+     xmlns:u="sap.ui.unified"
+    xmlns:custData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+
+    <VBox class="sapUiNoContentPadding sapUiNoMargin">
+       	<f:SimpleForm 
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title=""
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+			<Label text="{i18n>Grpshpmno}" />
+				<Text text="{create>/results/Grpshpmno}" />
+
+			<Label text="{i18n>Waybillno}" />
+				<Input  value="{create>/results/Waybillno}"  width="50%" maxLength="8"
+				editable="{Header>/data/editable}"
+                enabled="{Header>/data/editable}"/>
+
+            <Label text="{i18n>Trckplteno}" />
+				<Input  value="{create>/results/Trckplteno}"  width="50%" maxLength="20"
+				editable="{Header>/data/editable}"
+                enabled="{Header>/data/editable}"/>
+
+            <Label text="{i18n>Shpmco}" />
+				<Input  value="{create>/results/Shpmco}"  width="50%" maxLength="10"
+				editable="{Header>/data/editable}"
+                enabled="{Header>/data/editable}"/>
+
+            <Label text="{i18n>Drivername}" />
+				<Input  value="{create>/results/Drivername}"  width="50%" 
+				editable="{Header>/data/editable}"
+                enabled="{Header>/data/editable}"/>
+
+            <Label text="{i18n>Drivermobile}" />
+				<Input  value="{create>/results/Drivermobile}"  width="50%" maxLength="13"
+				editable="{Header>/data/editable}"
+                enabled="{Header>/data/editable}"/>
+
+            <Label text="{i18n>Comments}" />
+				<TextArea  value="{create>/results/Comments}"   maxLength="100" 
+				editable="{Header>/data/editable}"
+                enabled="{Header>/data/editable}"/>
+
+                <Label text="{i18n>Shpmdate}" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
+                <DatePicker  value="{
+						'path': 'create>/results/Shpmdate',
+						'type':'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'dd-MM-yyyy',
+                            'UTC': true
+						}				
+					}"  editable="false" visible="{= ${Header>/data/editable}=== true ? false : true}"
+                enabled="false"   width="50%" />
+
+                <Label text="{i18n>Shpmtime}" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
+				<TimePicker id="idtime" value="{
+				path: 'create>/results/Shpmtime',
+				type: 'sap.ui.model.odata.type.Time',
+                formatOptions: {  
+                    pattern : 'HH:mm:ss'
+                }}" editable="false" visible="{= ${Header>/data/editable}=== true ? false : true}"
+                enabled="false"  width="50%"/>
+
+                <Label text="{i18n>Createdby}" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
+				<Text text="{create>/results/Createdby}"  width="50%" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
+				</f:content>
+		</f:SimpleForm>
+		
+				<Table id="itemtable" items="{path:'item>/results',templateShareable: false}"
+                >
+                <headerToolbar>
+				<OverflowToolbar style="Clear"><ToolbarSpacer />						
+							<Button  text="Add" type="Emphasized" press="onOpenDeliveryNo"  enabled="{Header>/data/editable}"/>
+				
+					</OverflowToolbar>	</headerToolbar>
+                    <columns>
+					 <Column width="5%"  >
+					 <Text text=""/>
+					 </Column>		
+
+                        <Column >
+                            <Text text="{i18n>Deliveryno}"  />
+                        </Column>
+						 <Column >
+                            <Text text="{i18n>Zlineno}" />
+                        </Column>
+                        <Column >
+                            <Text text="{i18n>Sopo}" />
+                        </Column>
+						<Column >
+                            <Text text="{i18n>Itemcode}" />
+                        </Column>
+						 <Column  >
+                            <Text text="{i18n>Description}" />
+                        </Column>
+                        <Column  >
+                            <Text text="{i18n>Deliveryqty}" />
+                        </Column>
+                        <Column  >
+                            <Text text="{i18n>Uom}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Plant}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Stloc}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Warehouseno}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Shiptoparty}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Shiptoname}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Groupshpm}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+						<Button icon="sap-icon://delete" press="deleteRow" type="Reject"
+							enabled="{Header>/data/editable}" visible="{= ${item>Zlineno}==='000010'? true : false}"/>
+						 <Text text="{item>Deliveryno}" />
+						  <Text text="{path:'item>Zlineno', formatter:'.updateSerialNo'}"></Text>
+						   <Text text='{item>Sopo}'></Text>
+						   <Text text='{item>Itemcode}'></Text>
+						   <Text text='{item>Description}'></Text>
+						   <Text text='{item>Deliveryqty}'></Text>
+						   <Text text='{item>Uom}'></Text>
+						   <Text text='{item>Plant}'></Text>
+						   <Text text='{item>Stloc}'></Text>
+						   <Text text='{item>Warehouseno}'></Text>
+						   <Text text='{item>Shiptoparty}'></Text>
+						   <Text text='{item>Shiptoname}'></Text>
+						   <CheckBox selected='{item>Groupshpm}' displayOnly="{= ${Header>/data/editable}=== true ? false : true}" />
+                        </ColumnListItem>
+                    </items>
+                </Table>
+			
+				
+    </VBox>
+    
+</core:FragmentDefinition>
