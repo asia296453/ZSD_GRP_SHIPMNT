@@ -1,31 +1,32 @@
+var html2pdf; 
 sap.ui.define([
    "zsdgrpshipment/controller/BaseController",
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/routing/History", "sap/m/MessageBox", 'sap/ui/model/Filter',
     "sap/ui/model/FilterOperator", "sap/ui/model/json/JSONModel",
-     "sap/ui/core/Fragment", "sap/m/UploadCollectionParameter"
-], (BaseController, Controller,History ,MessageBox, Filter, FilterOperator, JSONModel, Fragment, r) => {
+     "sap/ui/core/Fragment", "sap/m/UploadCollectionParameter",
+     "zsdgrpshipment/js/html2pdf.bundle.min"
+], (BaseController, Controller,History ,MessageBox, Filter, FilterOperator, JSONModel, Fragment, r,html2pdf1) => {
     "use strict";
 
     return BaseController.extend("zsdgrpshipment.controller.main", {
         onInit() {
         this.setEditable(true);
+        this.setButtons(false,false,true,false);//edit,cancel,submit,print
+        
            this.getOdata("/HeaderSet(Grpshpmno='0')","create",null).then(() => { 
-        //         this.getOdata("/ShipmentSet(Grpshpmno='0',Deliveryno='0',Zlineno='0')",'',null).then((res) => { 
-        //             res.Deliveryqty = '';
-        //             var oarray = [];
-        //             oarray.push(res);
-        //             this.getOwnerComponent().getModel("item").setProperty("/results", oarray);
-        //    });
+            
            });
         },
-        setEditable:function(bflag){
-            var sstr1 = {
-                "editable": bflag
-            }
-            this.getOwnerComponent().getModel("Header").setProperty("/data", sstr1);
-            this.getOwnerComponent().getModel("Header").refresh(true);
+        onEdit:function(e){
+            this.setEditable(true);
+            this.setButtons(false,true,true,false);//edit,cancel,submit,print
         },
+         onCancel:function(e){
+            this.setEditable(false);
+            this.setButtons(true,false,false,true);//edit,cancel,submit,print
+        },
+       
          onPressAddRow:function(){
             this.showBusy(true);
             this.getOdata("/ShipmentSet(Grpshpmno='0',Deliveryno='0',Zlineno='0')",'',null).then((res) => { 
@@ -82,7 +83,7 @@ sap.ui.define([
                                     this.getOwnerComponent().getModel("create").setProperty("/results", oData);
                                 }else{
                                     this.getOwnerComponent().getModel("create").setProperty("/results", oData);
-                                var sMsg = "Group Shipment No "+oData.Grpshpmno+" Submitted Successfully ";
+                                var sMsg = "Group Shipment No "+this.updateSerialNo(oData.Grpshpmno)+" Submitted Successfully ";
                                 MessageBox.success(sMsg, {
                                     actions: ["OK"],
                                     onClose: (sAction) => {
@@ -91,6 +92,8 @@ sap.ui.define([
                                                 "editable": false
                                             }
                                             this.getOwnerComponent().getModel("Header").setProperty("/data", sstr1);
+                                            this.setEditable(false);
+                                             this.setButtons(true,false,false,true);//edit,cancel,submit,print
                                         }
                                     },
                                 });
@@ -132,6 +135,27 @@ sap.ui.define([
             if (i.length < 2) i = "0" + i;
             if (a.length < 2) a = "0" + a;
             return [a, i, r].join(".")
+        },
+
+        onPrint:function(e){
+           
+            var sshipno = this.getModel("create").getData().results.Grpshpmno;
+            var sfilename = "Group Shipment No. "+this.updateSerialNo(sshipno)+".pdf";
+            const oOptions = {
+            margin: [0.3,0,0.5,0],
+            filename:     sfilename,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'l' },
+            pagebreak: { avoid: 'tr' }
+        };
+        const element1 = this.getView().byId("ship1").getDomRef();
+        debugger;
+        html2pdf().set(oOptions).from(element1).save();
+       
+        },
+          onRefresh: function (e) {
+            location.reload();
         },
      });
 });

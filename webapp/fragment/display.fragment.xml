@@ -1,0 +1,154 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+     xmlns:u="sap.ui.unified"
+    xmlns:custData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+
+  
+    <VBox class="sapUiNoContentPadding sapUiNoMargin" >
+	<f:SimpleForm 
+            editable="true"
+            layout="ResponsiveGridLayout"
+            labelSpanXL="12"
+            labelSpanL="12"
+            labelSpanM="12"
+            labelSpanS="12"
+            adjustLabelSpan="false"
+            emptySpanXL="0"
+            emptySpanL="0"
+            emptySpanM="0"
+            emptySpanS="0"
+            columnsXL="1"
+            columnsL="1"
+            columnsM="1"
+            singleContainerFullSize="false"
+            class="formNoTitle "
+        >
+            <f:content>
+                <core:Title text="" />
+       	<f:SimpleForm 
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title=""
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+			<Label design="Bold" text="{i18n>Grpshpmno}" />
+				<Text  text="{path:'create>/results/Grpshpmno', formatter:'.updateSerialNo'}"  width="50%" />
+
+			<Label design="Bold" text="{i18n>Waybillno}" />
+				<Text  text="{create>/results/Waybillno}"  width="50%"  />
+
+            <Label design="Bold" text="{i18n>Trckplteno}" />
+				<Text  text="{create>/results/Trckplteno}"  width="50%" />
+
+            <Label design="Bold" text="{i18n>Shpmco}" />
+				<Text  text="{create>/results/Shpmco}"  width="50%" />
+
+            <Label design="Bold" text="{i18n>Drivername}" />
+				<Text  text="{create>/results/Drivername}"  width="50%" />
+
+            <Label design="Bold" text="{i18n>Drivermobile}" />
+				<Text  text="{create>/results/Drivermobile}"  width="50%"  />
+
+            <Label design="Bold" text="{i18n>Comments}" />
+				<Text  text="{create>/results/Comments}"  />
+
+                <Label design="Bold" text="{i18n>Shpmdate}"  />
+               <Text text="{path:'create>/results/Shpmdate', formatter:'.formateDate'}"  width="50%" />
+
+                <Label design="Bold" text="{i18n>Shpmtime}"  />
+				<Text text="{path:'create>/results/Shpmtime',
+				 type: 'sap.ui.model.odata.type.Time',
+				 formatOptions: {  
+                    pattern : 'HH:mm:ss'
+                }}"  width="50%" />
+				
+                <Label design="Bold" text="{i18n>Createdby}"  />
+				<Text text="{create>/results/Createdby}"  width="50%"  />
+				</f:content>
+		</f:SimpleForm>
+		
+		  <core:Title text="" />
+				<Table  items="{path:'item>/results',templateShareable: false}"
+                > 
+                    <columns>
+				
+                        <Column >
+                            <Text text="{i18n>Deliveryno}"  />
+                        </Column>
+						 <Column >
+                            <Text text="{i18n>Zlineno}" />
+                        </Column>
+                        <Column >
+                            <Text text="{i18n>Sopo}" />
+                        </Column>
+						<Column >
+                            <Text text="{i18n>Itemcode}" />
+                        </Column>
+						 <Column  >
+                            <Text text="{i18n>Description}" />
+                        </Column>
+                        <Column  >
+                            <Text text="{i18n>Deliveryqty}" />
+                        </Column>
+                        <Column  >
+                            <Text text="{i18n>Uom}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Plant}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Stloc}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Warehouseno}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Shiptoparty}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Shiptoname}" />
+                        </Column>
+						<Column  >
+                            <Text text="{i18n>Groupshpm}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+					 
+						 <Text text="{item>Deliveryno}" />
+						  <Text text="{path:'item>Zlineno', formatter:'.updateSerialNo'}"></Text>
+						   <Text text='{item>Sopo}'></Text>
+						   <Text text='{item>Itemcode}'></Text>
+						   <Text text='{item>Description}'></Text>
+						   <Text text='{item>Deliveryqty}'></Text>
+						   <Text text='{item>Uom}'></Text>
+						   <Text text='{item>Plant}'></Text>
+						   <Text text='{item>Stloc}'></Text>
+						   <Text text='{item>Warehouseno}'></Text>
+						   <Text text='{item>Shiptoparty}'></Text>
+						   <Text text='{item>Shiptoname}'></Text>
+						   <CheckBox selected='{item>Groupshpm}' displayOnly="true" />
+                        </ColumnListItem>
+                    </items>
+                </Table>
+			
+						</f:content>
+		</f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

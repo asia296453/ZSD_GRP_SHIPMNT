@@ -13,13 +13,11 @@ busyIndicatorDelay="0">
 						</semantic:content>
 						
 					<semantic:customFooterContent>
-					
-					<!-- <Button text="{i18n>Submit}" press="onStartUpload" type="Emphasized"
-                enabled="{Header>/data/editable}" visible="{ViewVis>/data/create}"/> -->
-					<Button text="{i18n>Submit}" press="onSubmit" type="Emphasized"
-                enabled="{Header>/data/editable}" visible="{ViewVis>/data/create}"/>
-					<!-- <Button text="{i18n>Save}" press="onSave" type="Emphasized"
-                enabled="{Header>/data/editable}" visible="{ViewVis>/data/create}"/> -->
+					<Button text="Refresh" press="onRefresh" type="Emphasized"   />
+					<Button text="Edit" press="onEdit" type="Emphasized" visible="{Buttons>/data/editbtn}" />
+					<Button text="Cancel" press="onCancel" type="Emphasized" visible="{Buttons>/data/cancelbtn}" />
+					<Button text="Submit" press="onSubmit" type="Emphasized" visible="{Buttons>/data/submitbtn}"/>
+					<Button text="Print" press="onPrint" type="Emphasized"  visible="{Buttons>/data/printbtn}"/> 
 				    </semantic:customFooterContent>
 
 					</semantic:DetailPage>

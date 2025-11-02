@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	 <SelectDialog  title="{i18n>Shpmco}"
+                 search="onSearchShpmco"
+		confirm="handleValueHelpShpmco"
+                  cancel="onCloseHostName"
+                  growing="true"
+				  items="{path:'/ShipCoSet', length:1000,templateShareable: false }" 
+				  multiSelect="false" 
+				  rememberSelections="true">
+        <StandardListItem title="{path:'Lifnr', formatter:'.updateSerialNo'}" info="{Name1}"  
+		 	type="Active"/>
+    </SelectDialog>
+
+</core:FragmentDefinition>

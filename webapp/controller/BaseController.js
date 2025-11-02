@@ -55,6 +55,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         onCloseDeliveryNo: function (oEvent) {
             this.FCTEXT.close();
         },
+         onOpenShipNo: function (oEvent) {
+            // var irow = oEvent.getParameter("id").split("-");
+            // var irowindex = irow[irow.length - 1];
+            // this.irowindex = irowindex;
+            if (!this.Shipno) {
+                this.Shipno = sap.ui.xmlfragment("zsdgrpshipment.fragment.Shipno", this);
+                this.getView().addDependent(this.Shipno);
+            };           
+            this.Shipno.open();
+        },
         
         onOpenDeliveryNo: function (oEvent) {
             // var irow = oEvent.getParameter("id").split("-");
@@ -65,6 +75,16 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                 this.getView().addDependent(this.CMTEXT);
             };           
             this.CMTEXT.open();
+        },
+        onOpenShpmco: function (oEvent) {
+            // var irow = oEvent.getParameter("id").split("-");
+            // var irowindex = irow[irow.length - 1];
+            // this.irowindex = irowindex;
+            if (!this.Shpmco1) {
+                this.Shpmco1 = sap.ui.xmlfragment("zsdgrpshipment.fragment.Shpmco", this);
+                this.getView().addDependent(this.Shpmco1);
+            };           
+            this.Shpmco1.open();
         },
         onValidation: function (ovalue) {
             var bflag = true;
@@ -117,6 +137,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             //this.getOdata("/FCTEXTSet", "DeliveryNo", [oFilter]);
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
+          onSearchGrpshpmno: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new sap.ui.model.Filter("Grpshpmno", sap.ui.model.FilterOperator.EQ, sValue);
+            //this.getOdata("/FCTEXTSet", "DeliveryNo", [oFilter]);
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+
+        onSearchShpmco: function (oEvent) {
+            var sValue = oEvent.getParameter("value");
+            var oFilter = new sap.ui.model.Filter("Lifnr", sap.ui.model.FilterOperator.EQ, sValue);
+            //this.getOdata("/FCTEXTSet", "DeliveryNo", [oFilter]);
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
        
         onPressDisplay: function (oEvent) {
          
@@ -126,7 +159,24 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         oncheckbox: function (e) {
 
         },
-
+        setEditable:function(bflag){
+            var sstr1 = {
+                "editable": bflag,
+                 "editable1": !bflag
+            }
+            this.getOwnerComponent().getModel("Header").setProperty("/data", sstr1);
+            this.getOwnerComponent().getModel("Header").refresh(true);
+        },
+        setButtons:function(editbtn,cancelbtn,submitbtn,printbtn){
+            var sstr1 = {
+                "editbtn": editbtn,
+                "cancelbtn":cancelbtn,
+                "submitbtn":submitbtn,
+                "printbtn":printbtn
+            }
+            this.getOwnerComponent().getModel("Buttons").setProperty("/data", sstr1);
+            this.getOwnerComponent().getModel("Buttons").refresh(true);
+        },
         handleValueHelpDeliveryNo: function (e) {
             var ssel = e.getParameter("selectedItem").getProperty("title");
             var oF4Data = this.getView().getModel("item").getData().results;
@@ -161,6 +211,25 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             }
         },
 
+        handleValueHelpGrpshpmno: function (e) {
+            var ssel = e.getParameter("selectedItem").getProperty("title");
+            var oFilter1 = new sap.ui.model.Filter("Grpshpmno", sap.ui.model.FilterOperator.EQ, ssel);
+            this.getOdata("/HeaderSet", "create", oFilter1).then((res) => {
+                this.getModel("create").setProperty("/results",res[0]);
+                this.getModel("create").refresh();      
+                var oFilter = new sap.ui.model.Filter("Grpshpmno", sap.ui.model.FilterOperator.EQ, ssel);
+                this.getOdata("/ShipmentSet", "item", oFilter);
+                this.setEditable(false);
+                this.setButtons(true,false,false,true);//edit,cancel,submit,print
+            });
+        },
+
+         handleValueHelpShpmco: function (e) {
+            var ssel = e.getParameter("selectedItem").getProperty("title");
+            this.getModel("create").getData().results.Shpmco = ssel;
+            this.getModel("create").refresh(); 
+        },
+      
         timeformat: function (val) {
             if (val !== null) {
                 if (typeof val === 'string' || val instanceof String) {

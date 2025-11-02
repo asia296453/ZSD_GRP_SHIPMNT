@@ -21,6 +21,7 @@ sap.ui.define([
             this.setModel(new sap.ui.model.json.JSONModel(), "create");
             this.setModel(new sap.ui.model.json.JSONModel(), "item");
             this.setModel(new sap.ui.model.json.JSONModel(), "Header");
+            this.setModel(new sap.ui.model.json.JSONModel(), "Buttons");
             // enable routing
             this.getRouter().initialize();
         }
