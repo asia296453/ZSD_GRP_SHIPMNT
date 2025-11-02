@@ -18,7 +18,7 @@ builder:
           url: http://rd4.sap.alrabie.com:443
           client: '100'
         app:
-          name: ZSD_GRP_SHIP
+          name: ZSD_GRP_SHIPMNT
           description: Manage Group shipment
           package: ZFIORI
           transport: RD4K900862

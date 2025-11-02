@@ -110,6 +110,39 @@
 				<Text text="{create>/results/Createdby}"  width="50%" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
 				</f:content>
 		</f:SimpleForm>
+            <!-- <core:Title text="" />
+<f:SimpleForm   
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title=""
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="3"
+			columnsL="3"
+			columnsM="3"
+			singleContainerFullSize="false" >
+             <f:content>
+        <core:Title text="" />
+               	<Label design="Bold"  text="{i18n>Deliveryno}"  />
+				<Input  value="{localModel>/results/Deliveryno}" maxLength="8"
+				 showValueHelp="true"
+                    valueHelpRequest="onOpenDeliveryNo"
+                    valueHelpOnly="false"
+				
+               /> 
+        <core:Title text="" />
+         <core:Title text="" />
+
+    </f:content>
+    </f:SimpleForm> -->
+                
 		    <core:Title text="" />
 				<Table id="itemtable" items="{path:'item>/results',templateShareable: false}"
                 >
