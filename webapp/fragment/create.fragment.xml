@@ -86,6 +86,7 @@
 				
                />
 
+          
                 <Label design="Bold" text="{i18n>Shpmdate}" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
                 <DatePicker  value="{
 						'path': 'create>/results/Shpmdate',
@@ -110,51 +111,34 @@
 				<Text text="{create>/results/Createdby}"  width="50%" visible="{= ${Header>/data/editable}=== true ? false : true}"/>
 				</f:content>
 		</f:SimpleForm>
-            <!-- <core:Title text="" />
-<f:SimpleForm   
-			editable="true"
-			layout="ResponsiveGridLayout"
-			title=""
-			labelSpanXL="3"
-			labelSpanL="3"
-			labelSpanM="3"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="4"
-			emptySpanL="4"
-			emptySpanM="4"
-			emptySpanS="0"
-			columnsXL="3"
-			columnsL="3"
-			columnsM="3"
-			singleContainerFullSize="false" >
-             <f:content>
-        <core:Title text="" />
-               	<Label design="Bold"  text="{i18n>Deliveryno}"  />
-				<Input  value="{localModel>/results/Deliveryno}" maxLength="8"
+            <core:Title text="" />
+            <HBox >
+            	<Label design="Bold"  text="{i18n>Deliveryno}"  class="zinp"/>
+				<Input  value="{localModel>/Deliveryno}" 
 				 showValueHelp="true"
                     valueHelpRequest="onOpenDeliveryNo"
                     valueHelpOnly="false"
-				
+                change="onchangedeliv"
                /> 
-        <core:Title text="" />
-         <core:Title text="" />
-
-    </f:content>
-    </f:SimpleForm> -->
-                
+			   
+			    <Label text="" ></Label>
+        <Button text="Add" type="Emphasized" press="onAdd" class="zbtn" />
+		
+		  <Label text="" ></Label>
+        <Button text="Delete" type="Emphasized" press="onDelete" class="zbtn"/>
+            </HBox>
 		    <core:Title text="" />
 				<Table id="itemtable" items="{path:'item>/results',templateShareable: false}"
                 >
-                <headerToolbar>
+                <!-- <headerToolbar>
 				<OverflowToolbar style="Clear"><ToolbarSpacer />						
 							<Button  text="Add" type="Emphasized" press="onOpenDeliveryNo" />
 				
-					</OverflowToolbar>	</headerToolbar>
+					</OverflowToolbar>	</headerToolbar> -->
                     <columns>
-					 <Column width="5%"  >
+					 <!-- <Column width="5%"  >
 					 <Text text=""/>
-					 </Column>		
+					 </Column>		 -->
 
                         <Column >
                             <Text text="{i18n>Deliveryno}"  />
@@ -198,8 +182,8 @@
                     </columns>
                     <items>
                         <ColumnListItem>
-						<Button icon="sap-icon://delete" press="deleteRow" type="Reject"
-							enabled="{Header>/data/editable}" visible="{= ${item>Zlineno}==='000010'? true : false}"/>
+						<!-- <Button icon="sap-icon://delete" press="deleteRow" type="Reject"
+							enabled="{Header>/data/editable}" visible="{= ${item>Zlineno}==='000010'? true : false}"/> -->
 						 <Text text="{item>Deliveryno}" />
 						  <Text text="{path:'item>Zlineno', formatter:'.updateSerialNo'}"></Text>
 						   <Text text='{item>Sopo}'></Text>

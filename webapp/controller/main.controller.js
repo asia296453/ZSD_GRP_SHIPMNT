@@ -11,6 +11,10 @@ sap.ui.define([
 
     return BaseController.extend("zsdgrpshipment.controller.main", {
         onInit() {
+        this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno",'');
+            this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno1",'');
+            this.getOwnerComponent().getModel("localModel").refresh(); 
+            
         this.setEditable(true);
         this.setButtons(false,false,true,false);//edit,cancel,submit,print
         
@@ -157,5 +161,112 @@ sap.ui.define([
           onRefresh: function (e) {
             location.reload();
         },
-     });
+
+        onAdd: function (e) {
+            var ssel = this.getView().getModel("localModel").getData().Deliveryno;
+            var ssel1 = this.getView().getModel("localModel").getData().Deliveryno1;
+            if (ssel === '') {
+                MessageBox.error("Please select Delivery No.");
+            } else {
+                var oF4Data = this.getView().getModel("item").getData().results;
+                if (oF4Data && oF4Data.length > 0) {
+                    var selCurrRow = oF4Data.filter(function (el) {
+                        return el.Deliveryno == ssel;
+                    });
+                }
+                if (selCurrRow !== undefined && selCurrRow.length > 0) {
+                    MessageBox.error("Delivery No. is already present in Item table.");
+                    return;
+                }
+                else {
+                    var oFilter = new sap.ui.model.Filter("Deliveryno", sap.ui.model.FilterOperator.EQ, ssel);
+                    if (ssel === ssel1) {
+                        this.getOdata("/ShipmentSet", '', oFilter, ssel1).then((res) => {
+                            if (res.length === 0) {
+                                MessageBox.error("Delivery No. not found");
+                                return;
+                            }
+                            else {
+                                if (this.getOwnerComponent().getModel("item").getData().results === undefined) {
+                                    var oarray = res;
+                                } else {
+                                    var oarray = this.getOwnerComponent().getModel("item").getData().results;
+                                    oarray = oarray.concat(res);
+
+                                }
+
+                                this.getOwnerComponent().getModel("item").setProperty("/results", oarray);
+                                this.getOwnerComponent().getModel("item").refresh(true);
+                            }
+                        });
+                    } else {
+                        this.getOdata("/ShipmentSet", '', oFilter).then((res) => {
+                            if (res.length === 0) {
+                                MessageBox.error("Delivery No. not found");
+                                return;
+                            }
+                            else {
+                                if (this.getOwnerComponent().getModel("item").getData().results === undefined) {
+                                    var oarray = res;
+                                } else {
+                                    var oarray = this.getOwnerComponent().getModel("item").getData().results;
+                                    oarray = oarray.concat(res);
+
+                                }
+
+                                this.getOwnerComponent().getModel("item").setProperty("/results", oarray);
+                                this.getOwnerComponent().getModel("item").refresh(true);
+                            }
+
+                        });
+                    }
+
+                }
+            }
+            this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno",'');
+            this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno1",'');
+            this.getOwnerComponent().getModel("localModel").refresh(); 
+        },
+
+        onDelete: function (oEvent) {
+            var ssel = this.getView().getModel("localModel").getData().Deliveryno;
+            if (ssel === '') {
+                MessageBox.error("Please select Delivery No. to delete");
+            } else {
+                var oF4Data = this.getView().getModel("item").getData().results;
+                if (oF4Data && oF4Data.length > 0) {
+                    var selCurrRow = oF4Data.filter(function (el) {
+                        return el.Deliveryno == ssel;
+                    });
+                }
+                if (selCurrRow !== undefined && selCurrRow.length > 0) {
+                    var odata = this.getView().getModel("item").getProperty("/results");
+                    var oindex = [];
+                    odata.forEach(function (item, index) {
+                        if (item.Deliveryno !== ssel) {
+                            oindex.push(item);
+                        }
+                    });
+
+                    debugger;
+                    this.getView().getModel("item").setProperty("/results", oindex);
+                    this.getView().getModel("item").refresh(true);
+                }
+                else {
+                    MessageBox.error("Delivery No. is not present in Item table.");
+                    return;
+                }
+            }
+            this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno",'');
+            this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno1",'');
+            this.getOwnerComponent().getModel("localModel").refresh(); 
+        },
+        onchangedeliv: function (e) {
+            debugger;
+            var sdel = e.getParameter("value");
+            this.getView().getModel("localModel").setProperty("/Deliveryno1", sdel);
+            this.getView().getModel("localModel").refresh(true);
+        }
+
+    });
 });

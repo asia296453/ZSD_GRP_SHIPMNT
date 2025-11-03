@@ -179,36 +179,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         },
         handleValueHelpDeliveryNo: function (e) {
             var ssel = e.getParameter("selectedItem").getProperty("title");
-            var oF4Data = this.getView().getModel("item").getData().results;
-            if (oF4Data && oF4Data.length > 0) {
-                var selCurrRow = oF4Data.filter(function (el) {
-                    return el.Deliveryno == ssel;
-                });
-            }
-            if (selCurrRow !== undefined && selCurrRow.length > 0) {
-                MessageBox.error("Delivery No. is already present in Item table.");
-                return;
-            }
-            else{
-            var oFilter = new sap.ui.model.Filter("Deliveryno", sap.ui.model.FilterOperator.EQ, ssel);
-            this.getOdata("/ShipmentSet",'',oFilter).then((res) => { 
-                debugger;
-                   // res[0].Deliveryqty = '';
-                    
-                    if(this.getOwnerComponent().getModel("item").getData().results === undefined){
-                        var oarray = res;
-                    }else{
-                        var oarray = this.getOwnerComponent().getModel("item").getData().results;
-                        oarray = oarray.concat(res);
-                        
-                    }
-                    
-                    this.getOwnerComponent().getModel("item").setProperty("/results", oarray);
-                    this.getOwnerComponent().getModel("item").refresh(true);
-           });
-            
-
-            }
+             this.getModel("localModel").setProperty("/Deliveryno",ssel);
+                this.getModel("localModel").refresh();  
         },
 
         handleValueHelpGrpshpmno: function (e) {
@@ -229,7 +201,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             this.getModel("create").getData().results.Shpmco = ssel;
             this.getModel("create").refresh(); 
         },
-      
+        
         timeformat: function (val) {
             if (val !== null) {
                 if (typeof val === 'string' || val instanceof String) {
@@ -273,7 +245,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                 }
             }
         },
-        getOdata: function (surl, smodelname, ofilter, sexpand) {
+        getOdata: function (surl, smodelname, ofilter,ssearch) {
 
             return new Promise((resolve, reject) => {
                 if (ofilter === null) {
@@ -300,6 +272,31 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                     });
                 } else {
                     this.showBusy(true);
+                    if(ssearch !== null && ssearch !== '' && ssearch !== undefined){
+                        this.getOwnerComponent().getModel().read(surl, {
+                        filters: [ofilter],
+                         urlParameters: {
+                         "search": ssearch
+                        },
+                        success: function (oData) {
+                            this.showBusy(false);
+                            if (smodelname !== '') {
+                            if (oData.results !== undefined) {
+                                resolve(oData.results);
+                            } else {
+                                resolve(oData);
+                            }}
+                            resolve(oData.results);
+                        }.bind(this),
+                        error: function (oError) {
+                            this.showBusy(false);
+                            var msg = JSON.parse(oError.responseText).error.message.value;
+                            MessageBox.error(msg);
+                            reject();
+                        }.bind(this)
+                    });
+                    }
+                    else{
                     this.getOwnerComponent().getModel().read(surl, {
                         filters: [ofilter],
                         success: function (oData) {
@@ -321,6 +318,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                             reject();
                         }.bind(this)
                     });
+                }
                 }
             });
         },
