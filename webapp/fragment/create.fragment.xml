@@ -140,19 +140,19 @@
 					 <Text text=""/>
 					 </Column>		 -->
 
-                        <Column >
+                        <Column  width="10%">
                             <Text text="{i18n>Deliveryno}"  />
                         </Column>
-						 <Column >
+						 <Column   width="7%">
                             <Text text="{i18n>Zlineno}" />
                         </Column>
-                        <Column >
+                        <Column  width="10%">
                             <Text text="{i18n>Sopo}" />
                         </Column>
 						<Column >
                             <Text text="{i18n>Itemcode}" />
                         </Column>
-						 <Column  >
+						 <Column    width="10%">
                             <Text text="{i18n>Description}" />
                         </Column>
                         <Column  >
@@ -286,19 +286,19 @@
                 > 
                     <columns>
 				
-                        <Column >
+                        <Column width="10%">
                             <Text text="{i18n>Deliveryno}"  />
                         </Column>
-						 <Column >
+						 <Column width="7%">
                             <Text text="{i18n>Zlineno}" />
                         </Column>
-                        <Column >
+                        <Column  width="10%">
                             <Text text="{i18n>Sopo}" />
                         </Column>
 						<Column >
                             <Text text="{i18n>Itemcode}" />
                         </Column>
-						 <Column  >
+						 <Column  width="10%">
                             <Text text="{i18n>Description}" />
                         </Column>
                         <Column  >

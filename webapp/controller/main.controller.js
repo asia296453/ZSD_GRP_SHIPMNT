@@ -5,12 +5,18 @@ sap.ui.define([
     "sap/ui/core/routing/History", "sap/m/MessageBox", 'sap/ui/model/Filter',
     "sap/ui/model/FilterOperator", "sap/ui/model/json/JSONModel",
      "sap/ui/core/Fragment", "sap/m/UploadCollectionParameter",
-     "zsdgrpshipment/js/html2pdf.bundle.min"
-], (BaseController, Controller,History ,MessageBox, Filter, FilterOperator, JSONModel, Fragment, r,html2pdf1) => {
+     "zsdgrpshipment/js/html2pdf.bundle.min",
+     "sap/m/PDFViewer"
+], (BaseController, Controller,History ,MessageBox, Filter, FilterOperator, JSONModel, Fragment, r,html2pdf1,PDFViewer) => {
     "use strict";
 
     return BaseController.extend("zsdgrpshipment.controller.main", {
         onInit() {
+
+             this._pdfViewer = new PDFViewer;
+            this.getView().addDependent(this._pdfViewer);
+
+
         this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno",'');
             this.getOwnerComponent().getModel("localModel").setProperty("/Deliveryno1",'');
             this.getOwnerComponent().getModel("localModel").refresh(); 
@@ -144,18 +150,24 @@ sap.ui.define([
         onPrint:function(e){
            
             var sshipno = this.getModel("create").getData().results.Grpshpmno;
-            var sfilename = "Group Shipment No. "+this.updateSerialNo(sshipno)+".pdf";
-            const oOptions = {
-            margin: [0.3,0,0.5,0],
-            filename:     sfilename,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'l' },
-            pagebreak: { avoid: 'tr' }
-        };
-        const element1 = this.getView().byId("ship1").getDomRef();
-        debugger;
-        html2pdf().set(oOptions).from(element1).save();
+            // this._pdfViewer.setSource(this._getBaseURL() + "/sap/opu/odata/sap/ZSD_GROUP_SHIPMENT_SRV/AttachmentSet(Grpshpmno='" + sshipno + "')/$value");
+           this._pdfViewer.setSource("/sap/opu/odata/sap/ZSD_GROUP_SHIPMENT_SRV/AttachmentSet(Grpshpmno='" + sshipno + "')/$value");
+            this._pdfViewer.setTitle("Group Shipment Form");
+            this._pdfViewer.setTitle("Group Shipment Form");
+            this._pdfViewer.open();
+
+        //     var sfilename = "Group Shipment No. "+this.updateSerialNo(sshipno)+".pdf";
+        //     const oOptions = {
+        //     margin: [0.3,0,0.5,0],
+        //     filename:     sfilename,
+        //     image:        { type: 'jpeg', quality: 0.98 },
+        //     html2canvas:  { scale: 2 },
+        //     jsPDF:        { unit: 'in', format: 'letter', orientation: 'l' },
+        //     pagebreak: { avoid: 'tr' }
+        // };
+        // const element1 = this.getView().byId("ship1").getDomRef();
+        // debugger;
+        // html2pdf().set(oOptions).from(element1).save();
        
         },
           onRefresh: function (e) {
